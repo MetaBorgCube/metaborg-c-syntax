@@ -1,0 +1,451 @@
+module c-syntax-bnf
+//
+//imports Common
+//
+//context-free start-symbols Start
+//
+//context-free syntax
+//  
+//  Start = 
+//    Expression
+//    
+//  Start = 
+//    TranslationUnit
+//    
+//  TranslationUnit.TranslationUnit =
+//    ExternalDeclaration+
+//    
+//  ExternalDeclaration = 
+//    FunctionDefinition 
+//    
+//  ExternalDeclaration =
+//    Declaration
+//    
+//  FunctionDefinition.FunDef = 
+//    DeclarationSpecifiers? Declarator Declaration* CompoundStatement
+//    
+//  Declaration.Decl = 
+//    DeclarationSpecifiers InitDeclaratorList? ";"
+//    
+//  DeclarationList = Declaration+
+//  
+//  DeclarationSpecifiers.DeclSpecs1 = 
+//    StorageClassSpecifier DeclarationSpecifiers?
+//  
+//  DeclarationSpecifiers = 
+//    TypeSpecifier DeclarationSpecifiers?
+//  
+//  DeclarationSpecifiers = 
+//    TypeQualifier DeclarationSpecifiers?
+//  
+//  StorageClassSpecifier =  "auto" 
+//  StorageClassSpecifier = "register" 
+//  StorageClassSpecifier = "static" 
+//  StorageClassSpecifier = "extern" 
+//  StorageClassSpecifier = "typedef"
+//    
+//  TypeSpecifier = "void"
+//  TypeSpecifier = "char"
+//  TypeSpecifier = "short"
+//  TypeSpecifier = "int"
+//  TypeSpecifier = "long"
+//  TypeSpecifier = "float"
+//  TypeSpecifier = "double"
+//  TypeSpecifier = "signed"
+//  TypeSpecifier = "unsigned"
+//  TypeSpecifier = StructOrUnionSpecifier
+//  TypeSpecifier = EnumSpecifier
+//  TypeSpecifier = TypedefName
+//  
+//  TypeQualifier = "const"
+//  TypeQualifier = "volatile"
+//  
+//  StructOrUnionSpecifier =
+//    StructOrUnion ID? "{" StructDeclarationList "}"
+//
+//  StructOrUnionSpecifier =
+//    StructOrUnion ID
+//  
+//  StructOrUnion = "struct"
+//  StructOrUnion = "union"
+//  
+//  StructDeclarationList = 
+//    StructDeclaration+
+//    
+//  InitDeclaratorList = 
+//    {InitDeclaration ","}+
+//    
+//  InitDeclarator =
+//    Declarator
+//    
+//  InitDeclarator = 
+//    Declarator "=" Initializer
+//    
+//  StructDeclaration = 
+//    SpecifierQualifierList StructDeclaratorList ";"
+//    
+//  SpecifierQualifierList = 
+//    TypeSpecifier SpecifierQualifierList?
+//    
+//  SpecifierQualifierList = 
+//    TypeQualifier SpecifierQualifierList?
+//    
+//  StructDeclaratorList =
+//    {StructDeclarator ","}+
+//    
+//  StructDeclarator = 
+//    Declarator
+//    
+//  StructDeclarator =
+//    StructDeclarator? ":" ConstantExpression
+//    
+//  EnumSpecifier =
+//    "enum" ID? "{" EnumeratorList "}"
+//    
+//  EnumSpecifier =
+//    "enum" ID
+//    
+//  EnumeratorList = 
+//    {Enumerator ","}+
+//    
+//  Enumerator = 
+//    ID
+//    
+//  Enumerator = 
+//    ID "=" ConstantExpression
+//    
+//  Declarator = 
+//    Pointer? DirectDeclarator
+//    
+//  DirectDeclartor = 
+//    ID
+//    
+//  DirectDeclartor = 
+//    "(" Declarator ")"
+//    
+//  DirectDeclartor = 
+//    DirectDeclartor "[" ConstantExpression? "]"
+//    
+//  DirectDeclartor = 
+//    DirectDeclartor "(" ParameterTypeList ")"
+//    
+//  DirectDeclartor = 
+//    DirectDeclartor "(" IdentifierList? ")"
+//    
+//  Pointer =
+//    "*" TypeQualifierList?
+//  
+//  Pointer = 
+//    "*" TypeQualifierList? Pointer
+//    
+//  TypeQualifierList = 
+//    TypeQualifier+
+//    
+//  ParameterTypeList = 
+//    ParameterList
+//  
+//  ParameterTypeList =
+//    ParameterList "," "..."
+//    
+//  ParameterList = 
+//    {ParameterDeclaration ","}+
+//    
+//  ParameterDeclaration =
+//    DeclarationSpecifiers Declarator
+//    
+//  ParameterDeclaration =
+//    DeclarationSpecifiers AbstractDeclarator?
+//    
+//  IdentifierList =
+//    {Identifier ","}+
+//    
+//  Initializer = 
+//    AssignmentExpression
+//    
+//  Initializer =
+//    "{" InitializerList "}"
+//    "{" InitializerList "," "}"
+//    
+//  InitializerList = 
+//    {Initializer ","}+
+//   
+//  TypeName = 
+//    SpecifierQualifierList AbstractDeclarator?
+//    
+//  AbstractDeclarator = 
+//    Pointer
+//    
+//  AbstractDeclarator.DirDecl = 
+//    Pointer? DirectAbstractDeclarator
+//    
+//  DirectAbstractDeclarator.AbsDecl =
+//    "(" AbstractDeclarator ")" 
+//    
+//  DirectAbstractDeclarator.ArrayDecl = 
+//    DirectAbstractDeclarator? "[" ConstantExpression "]"
+//    
+//  DirectAbstractDeclarator.FunDecl =
+//    DirectAbstractDeclarator? "(" ParameterTypeList? ")"
+//  
+//  TypeNameDef = ID
+//  
+//  Statement = LabeledStatement    
+//  Statement = ExpressionStatement 
+//  Statement = CompoundStatement    
+//  Statement = SelectionStatement    
+//  Statement = IterationStatement   
+//  Statement = JumpStatement
+//    
+//  LabeledStatement.Label =
+//    ID ":" Statement
+//    
+//  LabeledStatement.Case = 
+//    "case" ConstantExpression ":" Statement
+//    
+//  LabeledStatement.Default =
+//    "default" ":" Statement
+//    
+//  ExpressionStatement.Exp =
+//    Expression? ";"
+//    
+//  CompoundStatement.Compound = 
+//    "{" DeclarationList? Statement* "}"
+//    
+////  StatementList = 
+////    Statement+
+//    
+//  SelectionStatement.If = 
+//    "if" "(" Expression ")" Statement
+//    
+//  SelectionStatement.IfElse =
+//    "if" "(" Expression ")" Statement "else" Statement
+//    
+//  SelectionStatement.Switch =
+//    "switch" "(" Expression ")" Statement
+//    
+//  IterationStatement.While =
+//    "while" "(" Expression ")" Statement
+//    
+//  IterationStatement.DoWhile = 
+//    "do" Statement "while" "(" Expression ")" ";"
+//    
+//  IterationStatement.For = 
+//    "for" "(" Expression? ";" Expression? ";" Expression? ")" Statement
+//    
+//  JumpStatement.Goto =
+//    "goto" ID ";"
+//    
+//  JumpStatement.Continue =
+//    "continue" ";"
+//    
+//  JumpStatement.Break =
+//    "break" ";"
+//  
+//  Statement.Return =
+//    "return" Expression? ";"
+//  
+//context-free syntax
+//
+//  Expression = 
+//    AssignmentExpression
+//  
+//  Expression.Comma = 
+//    Expression "," AssignmentExpression
+//  
+//  AssignmentExpression = 
+//    ConditionalExpression
+//  
+//  AssignmentExpression.Assign = 
+//    UnaryExpression AssignmentOperator AssignmentExpression
+//  
+//  AssignmentOperator.Assign    = "="
+//  AssignmentOperator.AssignMul = "*="
+//  AssignmentOperator.AssignDiv = "/="
+//  AssignmentOperator.AssignMod = "%="
+//  AssignmentOperator.AssignAdd = "+="
+//  AssignmentOperator.AssignMin = "-="
+//  AssignmentOperator.AssignLsh = "<<="
+//  AssignmentOperator.AssignRsh = ">>="
+//  AssignmentOperator.AssignAnd = "&="
+//  AssignmentOperator.AssignPow = "^="
+//  AssignmentOperator.AssignOr  = "|="
+//  
+//  ConditionalExpression = 
+//    LogicalOrExpression
+//    
+//  ConditionalExpression.Cond = 
+//    LogicalOrExpression "?" Expression ":" ConditionalExpression
+//
+//  ConstantExpression = 
+//    ConditionalExpression
+//    
+//  LogicalOrExpression = 
+//    LogicalAndExpression 
+//    
+//  LogicalOrExpression.LOr = 
+//    LogicalOrExpression "||" LogicalAndExpression 
+//    
+//  LogicalAndExpression = 
+//    InclusiveOrExpression
+//    
+//  LogicalAndExpression.LAnd = 
+//    LogicalAndExpression "&&" InclusiveOrExpression
+//    
+//  InclusiveOrExpression = 
+//    ExclusiveOrExpression 
+//    
+//  InclusiveOrExpression.Ior = 
+//    InclusiveOrExpression "|" ExclusiveOrExpression
+//    
+//  ExclusiveOrExpression = 
+//    AndExpression 
+//    
+//  ExclusiveOrExpression.Eor =
+//    ExclusiveOrExpression "^" AndExpression 
+//    
+//  AndExpression =
+//    EqualityExpression 
+//    
+//  AndExpression.And = 
+//    AndExpression "&" EqualityExpression 
+//    
+//  EqualityExpression = 
+//    RelationalExpression
+//    
+//  EqualityExpression.Eq = 
+//    EqualityExpression "==" RelationalExpression
+//    
+//  EqualityExpression.Neq = 
+//    EqualityExpression "!=" RelationalExpression 
+//    
+//  RelationalExpression = 
+//    ShiftExpression
+//    
+//  RelationalExpression.Lt = 
+//    RelationalExpression "<" ShiftExpression
+//    
+//  RelationalExpression.Gt = 
+//    RelationalExpression ">" ShiftExpression
+//    
+//  RelationalExpression.Leq = 
+//    RelationalExpression "<=" ShiftExpression
+//    
+//  RelationalExpression.Geq = 
+//    RelationalExpression ">=" ShiftExpression
+//    
+//  ShiftExpression = 
+//    AdditiveExpression 
+//    
+//  ShiftExpression.Lshift = 
+//    ShiftExpression "<<" AdditiveExpression 
+//    
+//  ShiftExpression.Rshift = 
+//    ShiftExpression ">>" AdditiveExpression 
+//    
+//  AdditiveExpression =
+//    MultiplicativeExpression  
+//    
+//  AdditiveExpression.Add =
+//    AdditiveExpression "+" MultiplicativeExpression 
+//    
+//  AdditiveExpression.Sub =
+//    AdditiveExpression "-" MultiplicativeExpression 
+//    
+//  MultiplicativeExpression = 
+//    CastExpression
+//    
+//  MultiplicativeExpression.Mul = 
+//    MultiplicativeExpression "*" CastExpression
+//    
+//  MultiplicativeExpression.Div = 
+//    MultiplicativeExpression "/" CastExpression
+//    
+//  MultiplicativeExpression.Mod = 
+//    MultiplicativeExpression "%" CastExpression
+//    
+//  CastExpression =
+//    UnaryExpression
+//    
+//  CastExpression.Cast =
+//    "(" TypeName ")" CastExpression
+//  
+//  UnaryExpression = 
+//    PostfixExpression
+//  
+//  UnaryExpression.PreInc = 
+//    "++" UnaryExpression
+//  
+//  UnaryExpression.PreDec = 
+//    "--" UnaryExpression
+//  
+//  UnaryExpression.UnOp = 
+//    UnaryOperator CastExpression // weird
+//  
+//  UnaryExpression.Sizeof = 
+//    "sizeof" UnaryExpression
+//  
+//  UnaryExpression.SizeofT = 
+//    "sizeof" "(" TypeName ")"
+//    
+//  UnaryOperator.Addr  = "&"
+//  UnaryOperator.Deref = "*"
+//  UnaryOperator.Uplus = "+"
+//  UnaryOperator.Umin  = "-"
+//  UnaryOperator.Tilde = "~"
+//  UnaryOperator.Not   = "!"
+//    
+//  PostfixExpression = 
+//    PrimaryExpression  
+//    
+//  PostfixExpression.Subscript = 
+//    PostfixExpression "[" Expression "]"  
+//    
+//  PostfixExpression.Call = 
+//    PostfixExpression "(" ArgumentExpressionListOpt ")"    
+//  
+////  PostfixExpression.Call = 
+////    PostfixExpression "(" ArgumentExpressionList? ")" 
+//    
+//  PostfixExpression.Proj = 
+//    PostfixExpression "." ID
+//    
+//  PostfixExpression.DerefProj = 
+//    PostfixExpression "->" ID
+//    
+//  PostfixExpression.PostInc = 
+//    PostfixExpression "++"
+//    
+//  PostfixExpression.PostDec = 
+//    PostfixExpression "--"
+//  
+//  PrimaryExpression.Var    = ID  
+//  PrimaryExpression        = Constant
+//  PrimaryExpression.String = STRING
+//  PrimaryExpression        = "(" Expression ")" {bracket}
+//  
+//  ArgumentExpressionListOpt = {AssignmentExpression ","}*
+//    
+//  ArgumentExpressionList.One =
+//    AssignmentExpression
+//    
+//  ArgumentExpressionList.App =
+//    ArgumentExpressionList "," AssignmentExpression 
+//    
+//  Constant = IntegerConstant
+////  Constant = CharacterConstant
+////  Constant = FloatingConstant
+////  Constant = EnumerationConstant
+//  
+//  IntegerConstant.Int = INT
+//  
+//  TypeName = ID
+//  
+//lexical restrictions 
+//
+//  "+" -/- [\+]
+//  "-" -/- [\-]
+//  
+//context-free syntax
+//
+//  ID = "sizeof" {reject}
+//  

@@ -1,0 +1,5 @@
+module c-k-and-r
+
+imports c-syntax 
+
+context-free start-symbols TranslationUnit 

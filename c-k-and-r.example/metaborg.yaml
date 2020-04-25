@@ -1,0 +1,10 @@
+---
+id: org.example:c-k-and-r.example:0.1.0-SNAPSHOT
+name: c-k-and-r
+dependencies:
+  compile:
+  - org.example:c-k-and-r:0.1.0-SNAPSHOT
+debug:
+  typesmart: false
+build:
+  useBuildSystemSpec: true

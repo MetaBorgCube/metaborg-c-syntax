@@ -1,0 +1,9 @@
+---
+id: org.example:c-k-and-r.test:0.1.0-SNAPSHOT
+name: c-k-and-r
+dependencies:
+  compile:
+  - org.example:c-k-and-r:0.1.0-SNAPSHOT
+  - org.metaborg:org.metaborg.meta.lang.spt:${metaborgVersion}
+build:
+  useBuildSystemSpec: true

@@ -1,0 +1,21 @@
+
+#include <stdio.h>
+
+int main() {  }
+
+#define foo int bar lasjdf
+
+#define foo bar \
+  baz int main() { }
+
+#define foo(x, y) (x + y)
+
+#include <bla> 
+
+#define foo bar
+
+#include foo/bar/baz h 
+
+int main() {
+}
+
