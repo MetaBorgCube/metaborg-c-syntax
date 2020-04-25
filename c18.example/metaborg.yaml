@@ -1,0 +1,10 @@
+---
+id: org.example:c18.example:0.1.0-SNAPSHOT
+name: c18
+dependencies:
+  compile:
+  - org.example:c18:0.1.0-SNAPSHOT
+debug:
+  typesmart: false
+build:
+  useBuildSystemSpec: true

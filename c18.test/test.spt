@@ -1,0 +1,7 @@
+module test
+
+language c18
+
+test parse [[
+
+]] parse succeeds
